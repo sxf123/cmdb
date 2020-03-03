@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: cmdb-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: cmdb-gateway
+    gateway:
+      routes:
+      - id: host
+        uri: lb://host-service
+        predicates:
+        - Path=/host/**
+        filters:
+        - StripPrefix=1
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/cmdb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.ops.host.entity
+  configuration:
+    map-underscore-to-camel: true
+
+server:
+  port: 8503
+
+exclude_urls: /user/login

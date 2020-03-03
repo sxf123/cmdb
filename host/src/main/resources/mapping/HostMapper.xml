@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ops.host.mapper.HostMapper">
+    <resultMap id="BaseResultMap" type="com.ops.host.entity.Host">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="hostname" jdbcType="VARCHAR" property="hostName"/>
+        <result column="ip_address" jdbcType="VARCHAR" property="ipAddress"/>
+        <result column="host_type" jdbcType="VARCHAR" property="hostType"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, hostname, ip_address, host_type, created_date, updated_date
+    </sql>
+
+    <insert id="saveHost">
+        insert into host(hostname,ip_address,host_type) values(#{hostName},#{ipAddress},#{hostType})
+    </insert>
+
+    <select id="selectHostByHostName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from host where hostname=#{hostName,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateByHostName">
+        update host set ip_address=#{ipAddress},host_type=#{hostType} where hostname=#{hostName}
+    </update>
+
+    <delete id="deleteByHostName">
+        delete from host where hostname=#{hostName}
+    </delete>
+
+    <select id="findAllHost" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List"/>
+        from host
+    </select>
+</mapper>

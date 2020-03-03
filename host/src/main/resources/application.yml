@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: host-service
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: host-service
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/cmdb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+  redis:
+    host: 192.168.0.104
+    port: 6379
+    lettuce:
+      pool:
+        max-idle: 1
+        min-idle: 0
+        max-wait: 30
+        max-active: 1
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.ops.host.entity
+  configuration:
+    map-underscore-to-camel: true
+
+server:
+  port: 8501
+pagehelper:
+  helper-dialect: mysql
+  reasonable: treu
+  support-methods-arguments: true
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      expose: "*"
